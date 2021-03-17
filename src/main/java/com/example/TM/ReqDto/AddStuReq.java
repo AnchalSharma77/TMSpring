@@ -6,6 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddStuReq {
+	
+	private Long phone;
+	private String name;
+	private String std;
 	public Long getPhone() {
 		return phone;
 	}
@@ -24,7 +28,5 @@ public class AddStuReq {
 	public void setStd(String std) {
 		this.std = std;
 	}
-	private Long phone;
-	private String name;
-	private String std;
+	
 }

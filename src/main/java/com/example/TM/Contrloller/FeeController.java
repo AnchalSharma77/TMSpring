@@ -26,16 +26,12 @@ public class FeeController {
 	
 	@GetMapping("/fee")
 	public Optional<FeeModel> getFee(@RequestParam int id) {
-		System.out.println(id);
 		return feeRepo.findById(id);
 	}
 	
 	@PostMapping("/fee")
 	public FeeModel addFee(@RequestBody FeeModel fee) {
-		System.out.println(fee.getFee());
-		System.out.println(fee.getId());
 		feeRepo.save(fee);
-		
 		return fee;
 	}
 }

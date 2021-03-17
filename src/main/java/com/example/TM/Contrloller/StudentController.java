@@ -14,6 +14,7 @@ import com.example.TM.Model.StudentModel;
 import com.example.TM.Repo.StudentRepo;
 import com.example.TM.ReqDto.AddStuReq;
 import com.example.TM.Service.CentralService;
+import com.example.TM.Service.StudentService;
 import com.example.TM.Util.CurrDate;
 
 
@@ -25,28 +26,26 @@ public class StudentController {
 	@Autowired
 	StudentRepo studentRepo;
 	
+	@Autowired
+	StudentService studentService;
 	
-	CurrDate dt = new CurrDate();
-	
-	/*@GetMapping("/student")
-	public Iterable<StudentModel> getStudent() {
-		
-		return   studentRepo.findAll();
-	}*/
 
 	
 	@GetMapping("/student")
 	public Optional<StudentModel> getStudent(@RequestParam Long id) {
+		System.out.println("Here...............");
 		return studentRepo.findById(id);
 	}
 	
 	@PostMapping("/student")
 	public void addStudent(@RequestBody AddStuReq streq) {
 		StudentModel stu = new StudentModel();
+		CurrDate dt = new CurrDate();
 		stu.setName(streq.getName());
 		stu.setPhone(streq.getPhone());
 		stu.setStd(streq.getStd());
 		stu.setDoj(dt.getCurrDate());
+		stu.setFee(studentService.getFee(Integer.parseInt(streq.getStd())));
 		studentRepo.save(stu);
 	}
 }

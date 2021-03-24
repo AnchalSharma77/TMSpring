@@ -10,23 +10,4 @@ public class AddStuReq {
 	private Long phone;
 	private String name;
 	private String std;
-	public Long getPhone() {
-		return phone;
-	}
-	public void setPhone(Long phone) {
-		this.phone = phone;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getStd() {
-		return std;
-	}
-	public void setStd(String std) {
-		this.std = std;
-	}
-	
 }

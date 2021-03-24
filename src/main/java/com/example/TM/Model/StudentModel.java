@@ -23,50 +23,6 @@ public class StudentModel {
 	private String std;
 	private String doj;//date of joining
 	private int fee;// from static db 
-	private String lm ;// last month for which fee is paid
 	
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Long getPhone() {
-		return phone;
-	}
-	public void setPhone(Long phone) {
-		this.phone = phone;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getStd() {
-		return std;
-	}
-	public void setStd(String std) {
-		this.std = std;
-	}
-	public String getDoj() {
-		return doj;
-	}
-	public void setDoj(String doj) {
-		this.doj = doj;
-	}
-	public int getFee() {
-		return fee;
-	}
-	public void setFee(int fee) {
-		this.fee = fee;
-	}
-	public String getLm() {
-		return lm;
-	}
-	public void setLm(String lm) {
-		this.lm = lm;
-	}
 	
 }

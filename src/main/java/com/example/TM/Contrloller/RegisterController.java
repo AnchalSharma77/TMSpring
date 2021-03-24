@@ -10,26 +10,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.TM.Model.FeeModel;
-import com.example.TM.Model.StudentModel;
-import com.example.TM.Repo.FeeRepo;
+import com.example.TM.Model.RegisterModel;
+import com.example.TM.Repo.RegistrationRepo;
+import com.example.TM.ReqDto.RegisterDto;
+import com.example.TM.Service.RegisterService;
+import com.example.TM.Util.Encrypt;
 
 
 @RestController
 @RequestMapping(value="/app",produces =" application/json")
-public class FeeController {
-
+public class RegisterController {
+	
 	@Autowired
-	FeeRepo feeRepo;
+	RegistrationRepo registrationRepo;
+	@Autowired
+	RegisterService registerService;
 	
-	@GetMapping("/fee")
-	public FeeModel getFee(@RequestParam int id) {
-		return feeRepo.findOneById(id);
+	@GetMapping("/register")
+	public RegisterModel getTutor(@RequestParam String id) {
+		return registerService.getTutor(id);
 	}
 	
-	@PostMapping("/fee")
-	public FeeModel addFee(@RequestBody FeeModel fee) {
-		feeRepo.save(fee);
-		return fee;
+	
+	@PostMapping("/register")
+	public void addTutor(@RequestBody RegisterDto reg) {
+		registerService.addTutor(reg);
+		
 	}
+
 }

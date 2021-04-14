@@ -1,12 +1,13 @@
-package com.example.TM.Model;
+package com.example.TM.ReqDto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginModel {
+public class LoginReqDto {
 	String id;
 	String pass;
+	
 
 }

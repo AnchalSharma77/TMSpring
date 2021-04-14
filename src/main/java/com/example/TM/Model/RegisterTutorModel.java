@@ -13,8 +13,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="register")
-public class RegisterModel {
+@Table(name="RegisterTutor")
+public class RegisterTutorModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

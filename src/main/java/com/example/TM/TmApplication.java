@@ -1,21 +1,19 @@
 package com.example.TM;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import com.example.TM.Util.Encrypt;
-import com.example.TM.Util.OTP;
 
+@EnableScheduling
 @SpringBootApplication
 public class TmApplication {
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(TmApplication.class, args);
-//		OTP o = new OTP();
-//		o.getOtp();
-//		
-//		System.out.println(Encrypt.encode("abc"));
-//		System.out.println(Encrypt.encode("abc"));
+		
 		
 		
 	}

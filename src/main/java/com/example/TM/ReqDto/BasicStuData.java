@@ -5,11 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AddStuReq {
-	
+public class BasicStuData {
+
 	private Long mobile;
 	private String email;
 	private String name;
-	private String std;
-	
 }

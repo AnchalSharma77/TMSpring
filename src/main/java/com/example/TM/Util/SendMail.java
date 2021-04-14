@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 		OTP o = new OTP();
 
-	   public void sendFromGMail(  String to) {
+	   public void sendFromGMail(  String to , String body) {
 	        Properties props = System.getProperties();
 	        String from = "project7719@gmail.com";
 	        String pass= "enter ypur passsword";
@@ -30,7 +30,7 @@ public class SendMail {
 	        props.put("mail.smtp.auth", "false");
 	        
 	        String subject = "OTP";
-	        String body = o.getOtp();
+	        //String body = o.getOtp();
 
 	        Session session = Session.getDefaultInstance(props);
 	        MimeMessage message = new MimeMessage(session);
@@ -65,4 +65,5 @@ public class SendMail {
 	        }
 	    }
 
+	
 }

@@ -3,15 +3,15 @@ package com.example.TM.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.TM.Repo.RegistrationRepo;
+import com.example.TM.Repo.RegisterTutorRepo;
 import com.example.TM.Util.Encrypt;
 
 @Service
-public class LoginService {
+public class LoginService extends CentralService {
 	@Autowired
-	RegistrationRepo registrationRepo;
+	RegisterTutorRepo registrationRepo;
 	@Autowired
-	RegisterService registerService;
+	RegisterTutorService registerService;
 	
 	boolean checkPassword(String usrpass , String getPass) {
 		System.out.println("usr pass" +Encrypt.encode(usrpass));

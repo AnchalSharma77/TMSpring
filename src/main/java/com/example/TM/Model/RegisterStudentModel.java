@@ -1,8 +1,6 @@
 package com.example.TM.Model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,13 +10,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="StudentInfo")
+@Table(name="RegisteredStudentInfo")
 @Entity
-public class StudentModel {
+public class RegisterStudentModel {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;//auto-increment
-	private Long phone;
+	private Long mobile;
+	private String email;
 	private String name;
 	private String std;
 	private String doj;//date of joining

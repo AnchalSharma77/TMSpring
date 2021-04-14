@@ -13,10 +13,10 @@ import lombok.Setter;
 @Entity
 public class DueModel {
 	@Id
-	private Long id;
+	private Long mobile;
 	private String email;
-	private String mobile;
-	private String lm ;// last month for which fee is paid
-	private String year;
+	private String ld ;// last date for which fee is paid
+	private Long dm;//total number of months for which fee is due
+	private Long dueFee;//calculated using due month and fee per month of the particular standard
 
 }

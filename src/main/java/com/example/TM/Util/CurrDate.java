@@ -17,6 +17,17 @@ public class CurrDate {
 	}
 	
 	
+	/**
+	 * 
+	 * @param date in {@code String}
+	 * @return  Day of month in {@code String} format
+	 */
+	public String getDay(String date) {
+		 SimpleDateFormat formatNowDay = new SimpleDateFormat("dd");
+		 String currentDay = formatNowDay.format(date);
+		 return currentDay;
+	}
+	
 	
 	public Long getDateDiff(String startDate ) {
 	

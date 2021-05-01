@@ -8,5 +8,5 @@ import lombok.Setter;
 public class PayReqDto {
 
 	String id;
-	Long month;
+	Long payFor;
 }

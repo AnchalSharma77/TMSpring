@@ -1,13 +1,21 @@
 package com.example.TM.Service;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
+import org.omg.CORBA.portable.ApplicationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.TM.Model.RegisterTutorModel;
 import com.example.TM.ReqDto.RegisterTutorDto;
+import com.example.TM.ResDto.BaseResponse;
+import com.example.TM.ResDto.PicUploadRes;
+import com.example.TM.ResDto.TutorRes;
 import com.example.TM.Util.Encrypt;
+import com.example.TM.Util.ResopnseCodes;
 
 
 @Service
@@ -79,9 +87,34 @@ public class RegisterTutorService extends CentralService {
 		tutor.setMobile(reg.getMobile());
 		tutor.setEmail(reg.getEmail());
 		tutor.setPass(Encrypt.encode(reg.getPass()));
-		
+		tutor.setDescription(reg.getDescription());
 		registerTutorRepo.save(tutor);
 	}
+	
+	
+	
+	public ResponseEntity<TutorRes> getAllTutors() throws ApplicationException{
+		TutorRes res = new TutorRes();
+		HttpStatus httpSts = HttpStatus.OK;
+		try {
+			List<RegisterTutorModel> tutorList = (List<RegisterTutorModel>)registerTutorRepo.findAll();
+		if (tutorList == null) {
+			res.setMessage(new ResopnseCodes().notFoundMsg);
+			res.setResponseCode(new ResopnseCodes().notFound);
+		} else {
+			res.setTutorList(tutorList);
+			res.setResponseCode(new ResopnseCodes().ok);
+			res.setMessage(new ResopnseCodes().okMsg);
+		}
+		return ResponseEntity.status(httpSts).body(res);
+		}catch (Exception e) {
+			//LOGGER.info(e.getMessage());
+			throw new ApplicationException(e.getMessage(), null);
+		}
+
+		
+	}
+
 
 }
 

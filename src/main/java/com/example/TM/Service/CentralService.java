@@ -1,15 +1,26 @@
 package com.example.TM.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.example.TM.Repo.AttendanceRepo;
+import com.example.TM.Repo.DTSRepo;
 import com.example.TM.Repo.DueRepo;
 import com.example.TM.Repo.FeeRepo;
+import com.example.TM.Repo.NotesRepo;
 import com.example.TM.Repo.RegisterStudentRepo;
 import com.example.TM.Repo.RegisterTutorRepo;
 import com.example.TM.Repo.StudentLoginRepo;
-
+/**
+ * 
+ * <p>This service autowire all the repositories and 
+ * services available in this project</p>
+ * 
+ * <p> These can be used anywhere in this project by 
+ * simply extending the CentralService</p>
+ * @author Anchal
+ */
 @Service
 public class CentralService {
 	//Repos
@@ -25,6 +36,11 @@ public class CentralService {
 	public StudentLoginRepo studentLoginRepo;
 	@Autowired
 	public AttendanceRepo attendanceRepo;
+	@Autowired
+	public DTSRepo dtsRepo;
+	@Autowired
+	public NotesRepo notesRepo;
+	
 	
 	//Services
 	@Autowired
@@ -39,6 +55,21 @@ public class CentralService {
 	public RegisterTutorService registerTutorService;
 	@Autowired
     private	StudentLoginService studentLoginService;
+	@Autowired
+	public PaymentService paymentService;
+	@Autowired
+	public FeeService feeService;
+	@Autowired
+	public StudentPanelService studentPanelService;
+	@Autowired
+	public AttendanceService attendanceService ; 
+	@Autowired
+	public ProfileImgService profileImgService;
+	@Autowired
+	public NotesService notesService;
 	
+	
+	@Autowired
+	Environment env;
 
 }

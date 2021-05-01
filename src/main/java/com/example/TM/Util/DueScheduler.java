@@ -12,10 +12,12 @@ import com.example.TM.Service.CentralService;
 @Component
 public class DueScheduler extends CentralService{
 	
+	//String day = new CurrDate().getDay(new CurrDate().getCurrDate());
 	/***
 	 * Updates the due months and due fee
 	 */
-	@Scheduled(fixedDelay=1000000)
+	//cron = "0 12 1 * ?"
+	@Scheduled(fixedDelay = 10000000)
 	public void schDueUpdate() {
 		List<DueModel> dmodel= dueService.getAll();
 		if(dmodel.equals(null)) {
@@ -24,7 +26,7 @@ public class DueScheduler extends CentralService{
 		else {
 		for(DueModel stu : dmodel) {
 			stu.setDm(stu.getDm()+1);
-			int dueFee= studentRepo.findOneByMobile(stu.getMobile()).getFee();
+			int dueFee= studentRepo.findOneByMobileAndTid(stu.getMobile(),stu.getTid()).getFee();
 			stu.setDueFee(stu.getDueFee()+dueFee);
 			dueRepo.save(stu);
 		}

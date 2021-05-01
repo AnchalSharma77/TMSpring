@@ -1,6 +1,8 @@
 package com.example.TM.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,6 +15,10 @@ import lombok.Setter;
 @Entity
 public class DueModel {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long did;
+	private Long tid;
+	private Long sid;
 	private Long mobile;
 	private String email;
 	private String ld ;// last date for which fee is paid

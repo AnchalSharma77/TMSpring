@@ -18,12 +18,14 @@ public class RegisterTutorModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	String fn;
-	String ln;
-	String email;
-	String mobile;
-	String pass;
+	private Long tid;
+	private String fn;
+	private String ln;
+	private String email;
+	private String mobile;
+	private String pass;
+	private String imgUrl;
+	private String description;
 }
 
 

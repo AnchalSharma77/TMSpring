@@ -14,9 +14,9 @@ public class LoginService extends CentralService {
 	RegisterTutorService registerService;
 	
 	boolean checkPassword(String usrpass , String getPass) {
-		System.out.println("usr pass" +Encrypt.encode(usrpass));
-		if(getPass.equals(Encrypt.encode(usrpass))) {
-		
+		//System.out.println("usr pass" +Encrypt.encode(usrpass)); if(getPass.equals(Encrypt.encode(usrpass)))
+		if(getPass.equals(usrpass)){
+			//System.out.println("login success");
 			   return true;}
 		return false;
 	}
@@ -35,6 +35,7 @@ public class LoginService extends CentralService {
 				return checkPassword(pass, password);
 			}
 			
+			
 			}
 			return false;
 		}
@@ -42,14 +43,14 @@ public class LoginService extends CentralService {
 		
 		
 	
-	public void login(String id, String pass) {
-		if(authenticate(id, pass)) {
-			System.out.println("user exist");
-			//TODO login
-		}
-		else
-			System.out.println("invalid");
-	}
+//	public void login(String id, String pass) {
+//		if(authenticate(id, pass)) {
+//			System.out.println("user exist");
+//			//TODO login
+//		}
+//		else
+//			System.out.println("invalid");
+//	}
 	
 
 }

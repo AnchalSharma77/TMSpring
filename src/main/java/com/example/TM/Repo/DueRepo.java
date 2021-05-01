@@ -1,5 +1,6 @@
 package com.example.TM.Repo;
 
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,9 @@ public interface DueRepo extends CrudRepository<DueModel, Long>{
 		boolean existsByMobile(String usrid);
 		boolean existsByEmail(String usrid);
 		//DueModel findById(String id);
+		//List<DueModel> findById();
+		DueModel findOneByDid(Long did);
+		DueModel findOneBySid(Long sid);
 		
 
 }

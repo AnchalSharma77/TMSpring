@@ -1,6 +1,8 @@
 package com.example.TM.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -14,6 +16,9 @@ import lombok.Setter;
 @Entity
 public class RegisterStudentModel {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long Sid;
+	private Long tid; //id of tutor
 	private Long mobile;
 	private String email;
 	private String name;

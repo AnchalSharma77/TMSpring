@@ -11,5 +11,6 @@ public class RegisterTutorDto {
 	String email;
 	String mobile;
 	String pass;
+	String description;
 
 }

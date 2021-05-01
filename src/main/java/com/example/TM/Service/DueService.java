@@ -1,12 +1,16 @@
 package com.example.TM.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.TM.Model.DueModel;
+import com.example.TM.Model.FeeModel;
 import com.example.TM.Model.RegisterStudentModel;
+import com.example.TM.ResDto.DueDto;
 import com.example.TM.Util.CurrDate;
+import com.example.TM.Util.Encrypt;
 
 @Service
 public class DueService extends CentralService {
@@ -16,7 +20,7 @@ public class DueService extends CentralService {
 	/***
 	 * 
 	 * @param id must not be {@literal null}.
-	 * @return
+	 * @return {@code true} if the id is registered , {@code false} otherwise
 	 */
 	public boolean studentExist(String id) {
 		
@@ -46,38 +50,43 @@ public class DueService extends CentralService {
 		return month;
 	}
 
-	/***
+	
+	/**
 	 * 
-	 * @param id must not be {@literal null}.
-	 * @return Long array containing due months and due fee
+	 * <p> sid is te id of student  and eid
+	 * is the user id of tutor , which is used
+	 * to get the unique {@literal Tid} .
+	 * @param sid must not be {@literal null}
+	 * @param eid must not be {@literal null}
+	 * @return  Long array containing due months and due fee
 	 */
-	public Long[] getDueData(String id  ) {
+	public Long[] getDueData(String sid , String eid ) {
 	
 		Long due[]= new Long[2];
 		Long dueFee=0L;
 		String std;
-		boolean isEmail=registerTutorService.isEmail(id);
+	//	Long tid;
+		//RegisterStudentModel student;
+		List<FeeModel> fees;
+		boolean isEmail=registerTutorService.isEmail(sid);
 	
-		if(studentExist(id)) {
-			std=isEmail?studentRepo.findOneByEmail(id).getStd():studentRepo.findOneByMobile(id).getStd(); 
-			
-		/*if(registerTutorService.isEmail(id)) {
-			std=studentRepo.findOneByEmail(id).getStd();
-			
-		}
-		else
-		 std= studentRepo.findOneByMobile(id).getStd(); */
+		if(studentExist(sid)) {
+			std=isEmail?studentRepo.findOneByEmail(sid).getStd():studentRepo.findOneByMobile(sid).getStd(); 
 		
 		int st=Integer.parseInt(std);
-	//	String lastDate=getLastDate(id);
-		int monthFee = feeRepo.findOneByStd(st).getFee();
-		//Long duration= getDueMonth(lastDate);
-		Long duration =isEmail? dueRepo.findOneByEmail(id).getDm(): dueRepo.findOneByMobile(id).getDm();
+		
+		Long Tid=registerTutorRepo.findOneByEmail(new Encrypt().decode(eid)).getTid();
+		fees=feeRepo.findByTid(Tid);
+		for(FeeModel f :fees) {
+		if(f.getStd()==st) {
+		int monthFee=f.getFee();
+		Long duration =isEmail? dueRepo.findOneByEmail(sid).getDm(): dueRepo.findOneByMobile(sid).getDm();
 		
 		due[0]=duration;
 		dueFee=duration*monthFee;
 		
 		due[1]=dueFee;
+		}}
 		}
 		return due;
 	}
@@ -98,17 +107,19 @@ public class DueService extends CentralService {
 	 * @return String
 	 */
 	public String getLastDate(String id) {
-		//DueModel stu;
 		boolean isEmail=registerTutorService.isEmail(id);
 		String lastDate=isEmail?dueRepo.findOneByEmail(id).getLd():dueRepo.findOneByMobile(id).getLd();
-		/*if(registerTutorService.isEmail(id)) {
-		 stu=dueRepo.findOneByEmail(id);
-		}
-		else {
-			 stu=dueRepo.findOneByMobile(id);
-		}*/
-		//return stu.getLd();
+		
 		return lastDate;
+	}
+	/***
+	 * 
+	 * @param id
+	 * @return total due fee of the student registered with {@literal id}
+	 */
+	public Long getDueById(String id) {
+		
+		return registerTutorService.isEmail(id)?dueRepo.findOneByEmail(id).getDueFee():dueRepo.findOneByMobile(id).getDueFee();
 	}
 	
 	/***
@@ -125,15 +136,39 @@ public class DueService extends CentralService {
 		return (List<DueModel>) dueRepo.findAll();
 	}
 
-	
-	public Long getDuesSum() {
+	/**
+	 * 
+	 * @return Sum of due fee of all the students
+	 */
+	public Long getDuesSum(String id) {
 		Long sum = 0L;
+		Long Tid=registerTutorRepo.findOneByEmail(new Encrypt().decode(id)).getTid();
 		List<DueModel> dmodel= getAll();
 		if(!(dmodel.equals(null))) {
+			
 			for(DueModel stu : dmodel) {
+				if(Tid==stu.getTid())
 				sum= sum+ stu.getDueFee();
 			}
 		}
 		return sum;
+	}
+	
+	public List<DueDto> listDueStudents (String tid) {
+		Long Tid=registerTutorRepo.findOneByEmail(new Encrypt().decode(tid)).getTid();
+		List<DueDto> dueList= new ArrayList<DueDto>();
+		List<DueModel> allDueList = getAll();
+		for(DueModel d : allDueList) {
+			if(d.getTid()==Tid) {
+				DueDto dto = new DueDto();
+				dto.setDm(d.getDm());
+				dto.setDueFee(d.getDueFee());
+				dto.setLd(d.getLd());
+				dto.setEmail(d.getEmail());
+				dto.setMobile(d.getMobile());
+				dueList.add(dto);
+			}
+		}
+		return dueList;
 	}
 }

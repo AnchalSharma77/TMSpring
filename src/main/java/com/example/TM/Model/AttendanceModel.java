@@ -18,7 +18,8 @@ public class AttendanceModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long Aid;
+	private Long tid;//if student is registered with multiple tutors
 	private Long mobile;
 	private String email;
 	private String name;

@@ -2,12 +2,8 @@ package com.example.TM.Util;
 
 import java.util.Properties;
 
-
-
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -19,8 +15,8 @@ public class SendMail {
 
 	   public void sendFromGMail(  String to , String body) {
 	        Properties props = System.getProperties();
-	        String from = "project7719@gmail.com";
-	        String pass= "enter ypur passsword";
+	        String from = "email";
+	        String pass= "your password";
 	        String host = "smtp.gmail.com";
 	        props.put("mail.smtp.starttls.enable", "true");
 	        props.put("mail.smtp.host", host);
@@ -30,7 +26,7 @@ public class SendMail {
 	        props.put("mail.smtp.auth", "false");
 	        
 	        String subject = "OTP";
-	        //String body = o.getOtp();
+	      //  String body = "Your OTP to login on TM  is : "+otp;
 
 	        Session session = Session.getDefaultInstance(props);
 	        MimeMessage message = new MimeMessage(session);

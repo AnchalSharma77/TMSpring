@@ -13,10 +13,10 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 		OTP o = new OTP();
 
-	   public void sendFromGMail(  String to , String body) {
+	   public void sendFromGMail(  String to , String body) throws MessagingException {
 	        Properties props = System.getProperties();
-	        String from = "email";
-	        String pass= "your password";
+	        String from = "project7719@gmail.com";
+	        String pass= "emailpassword";
 	        String host = "smtp.gmail.com";
 	        props.put("mail.smtp.starttls.enable", "true");
 	        props.put("mail.smtp.host", host);
@@ -25,13 +25,14 @@ public class SendMail {
 	        props.put("mail.smtp.port", "587");
 	        props.put("mail.smtp.auth", "false");
 	        
+	        
 	        String subject = "OTP";
-	      //  String body = "Your OTP to login on TM  is : "+otp;
-
 	        Session session = Session.getDefaultInstance(props);
 	        MimeMessage message = new MimeMessage(session);
+	        
 
 	        try {
+
 	            message.setFrom(new InternetAddress(from));
 	            InternetAddress toAddress = new InternetAddress();
 /*
@@ -41,13 +42,11 @@ public class SendMail {
 	            }*/
 	            
 	            toAddress = new InternetAddress(to);
-
-	         
 	            
 	            message.addRecipient(Message.RecipientType.TO, toAddress);
-
 	            message.setSubject(subject);
-	            message.setText(body);
+	          //  message.setText(body);
+	        	message.setContent(body, "text/html");
 	            Transport transport = session.getTransport("smtp");
 	            transport.connect(host, from, pass);
 	            transport.sendMessage(message, message.getAllRecipients());

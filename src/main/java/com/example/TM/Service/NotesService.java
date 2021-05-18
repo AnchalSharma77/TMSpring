@@ -22,14 +22,24 @@ import com.example.TM.Util.ResopnseCodes;
 @Service
 public class NotesService extends CentralService {
 	
-	
+	/***
+	 * <p>
+	 * Stores the file <code>nFile</code> with specified <code>std</code>
+	 * and <code>fileName</code> against particular <code>id</code>
+	 * </p>
+	 * @param id must not be {@literal null}.
+	 * @param std must not be {@literal null}.
+	 * @param fileName can be {@literal null}.
+	 * @param nfile must not be {@literal null}.
+	 * @return ResponseEntity
+	 * @throws ApplicationException
+	 */
 	public ResponseEntity<NotesRes> UploadFile(String id,String std, String fileName, MultipartFile nfile) throws ApplicationException {
 		try {
 				NotesRes res= new NotesRes();
 				HttpStatus httpSts = HttpStatus.OK;
 				Long Tid=0L;
 				List<NotesDto>  notesList=new ArrayList<NotesDto>();
-				
 				RegisterTutorModel user = registerTutorRepo.findOneByEmail(new Encrypt().decode(id));
 				NotesModel notes = new NotesModel();
 				if (user == null) {
@@ -42,6 +52,7 @@ public class NotesService extends CentralService {
 					String ext = FilenameUtils.getExtension(nfile.getOriginalFilename());
 					String url = env.getProperty("NOTES_DIR") + user.getTid() +tmstmp+ "." + ext;
 					File file = new File(env.getProperty("DCMNT_UPLOAD_PATH") + env.getProperty("NOTES_DIR")+ user.getTid() +tmstmp+ "." + ext);
+
 					if (file.exists()) {
 						file.delete();
 					}
@@ -53,15 +64,6 @@ public class NotesService extends CentralService {
 					notes.setStd(std);
 					notesRepo.save(notes);
 					
-			//		List<NotesModel> prevnotes = notesRepo.findByTid(Tid);
-//					for(NotesModel n: prevnotes) {
-//						NotesDto tmp= new NotesDto();
-//						tmp.setStd(n.getStd());
-//						tmp.setUrl(n.getUrl());
-//						tmp.setFileName(n.getFileName());
-//						tmp.setTid(n.getTid());
-//						notesList.add(tmp);
-//					}
 					notesList=getNotesList(Tid);
 					NotesDto ndto= new NotesDto();
 					ndto.setFileName(fileName);
@@ -82,7 +84,14 @@ public class NotesService extends CentralService {
 		}
 		}
 	
-	
+	/***
+	 * <p>
+	 * List all the notes uploaded by the particular tutor
+	 * registered with the Tid. 
+	 * </p>
+	 * @param Tid  must not be {@literal null}.
+	 * @return List
+	 */
 	public List<NotesDto> getNotesList( Long Tid){
 		List<NotesModel> prevnotes = notesRepo.findByTid(Tid);
 		List<NotesDto>  notesList=new ArrayList<NotesDto>();
@@ -98,7 +107,12 @@ public class NotesService extends CentralService {
 	}
 	
 	
-	
+	/***
+	 * 
+	 * @param id must not be {@literal null}.
+	 * @return ResponseEntity
+	 * @throws ApplicationException
+	 */
 	public ResponseEntity<NotesRes> getAllNotes(String id) throws ApplicationException {
 		try {
 				NotesRes res= new NotesRes();
@@ -118,6 +132,20 @@ public class NotesService extends CentralService {
 		}
 	
 	
+	/***
+	 * <p>
+	 * Lists all the notes the particular <code>id</code> is authorized to access.
+	 * </p>
+	 * <p>
+	 * <b>Example : </b> Let there is a {@literal student} <code>A</code> , std 1 ,
+	 * is registered with only <code>n</code> {@literal tutors} out of <code>K</code> {@literal tutors},
+	 * total {@literal tutors} . The {@literal student} <code>A</code> must not be able to access
+	 * the notes provided by the remaining i.e <code>(K-n)</code> {@literal tutors}.
+	 * </p>
+	 * @param id must not be {@literal null}
+	 * @return ResponseEntity
+	 * @throws ApplicationException
+	 */
 	public ResponseEntity<NotesRes> getNotesByStuId(String id) throws ApplicationException {
 		try {
 				NotesRes res= new NotesRes();

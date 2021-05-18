@@ -16,11 +16,12 @@ import com.example.TM.Service.CentralService;
 public class NotesController extends CentralService{
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(value = "/UploadFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/UploadNotes", method = RequestMethod.POST)
 	public ResponseEntity<NotesRes> UploadFile(@RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam("id") String id, @RequestParam("std") String std, @RequestParam(value="fileName", required = false) String fileName) throws Exception  {
-		
+	
 		 try {
+			 
 	            return notesService.UploadFile(id,std, fileName,file);
 
 	        } catch (Exception e) {

@@ -3,18 +3,33 @@ package com.example.TM.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CORBA.portable.ApplicationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.TM.Model.DTSModel;
 import com.example.TM.Model.RegisterStudentModel;
 import com.example.TM.Model.RegisterTutorModel;
 import com.example.TM.ResDto.SPTutorDto;
+import com.example.TM.ResDto.StudentPanelRes;
 import com.example.TM.Util.CurrDate;
+import com.example.TM.Util.Encrypt;
+import com.example.TM.Util.ResopnseCodes;
 
 @Service
 public class StudentPanelService extends CentralService {
 
+	/***
+	 * <p>
+	 * Lists all the dues and tutors the specified <code>semail</code>
+	 * (student) is registered with.
+	 * </p>
+	 * @param semail must not be {@literal null}.
+	 * @return List
+	 */
 	public List<Long>[] getTidDid( String semail) {
+		@SuppressWarnings("unchecked")
 		List<Long> arr[] = new ArrayList[2];
 		List<Long> Sids = new ArrayList<Long>();
 		List<Long> Tids = new ArrayList<Long>();
@@ -26,7 +41,9 @@ public class StudentPanelService extends CentralService {
 		List<DTSModel> dtsList= (List<DTSModel>) dtsRepo.findAll();
 		for(Long sid :Sids) {
 		for(DTSModel tmp : dtsList) {
-			if(tmp.getSid()==sid) {
+			
+			Long tmpSid=tmp.getSid();
+			if(tmpSid.equals(sid)) {
 				Tids.add(tmp.getTid());
 				Dids.add(tmp.getDid());
 			}
@@ -38,11 +55,23 @@ public class StudentPanelService extends CentralService {
 		
 	}
 	
-
-	
-	public Object[] stuPanel(String semail) {
-		Object stuPanel[]=new Object[2];
+	/***
+	 * <p>
+	 * Lists the things to be displayed on the dashboard of <code>email</code>
+	 * (student).<br>
+	 * e.g. total due, attendance, etc
+	 * </p>
+	 * @param email must not be {@literal null}.
+	 * @return StudentPanelRes
+	 * @throws ApplicationException
+	 */
+	public ResponseEntity<StudentPanelRes> stuPanel(String email) throws ApplicationException {
+		 HttpStatus httpSts = HttpStatus.OK;
+		 StudentPanelRes res= new StudentPanelRes();
+		try {
+		Object stuPanel[]=new Object[3];
 		Long due=0L;
+		String semail=new Encrypt().decode(email);
 		List<Long> dtIds[]=getTidDid(semail);
 		List<Long> Tids = dtIds[0];
 		List<Long> Dids = dtIds[1];
@@ -50,6 +79,7 @@ public class StudentPanelService extends CentralService {
 			due = due+dueRepo.findOneByDid(did).getDueFee();
 		}
 		stuPanel[0]=due;
+		stuPanel[1]=Tids.size();
 		
 		List<SPTutorDto> tList= new ArrayList<SPTutorDto>();
 		for(Long tid:Tids) {
@@ -67,7 +97,6 @@ public class StudentPanelService extends CentralService {
 		}
 			try {
 			String att=attendanceRepo.findOneByTidAndDateAndEmail(tid,new CurrDate().getCurrDate(),semail).getAttendance();
-			//if(!(att.equals(null)))
 			  spt.setTodayAtt(att);
 			}catch (NullPointerException e) {
 				spt.setTodayAtt("n/a");
@@ -76,39 +105,19 @@ public class StudentPanelService extends CentralService {
 			
 			tList.add(spt);
 		}
-		stuPanel[1]=tList;
+		stuPanel[2]=tList;
 		
-		
-		
-		return stuPanel;
+		res.setMessage(new ResopnseCodes().okMsg);
+		res.setResponseCode(new ResopnseCodes().ok);
+		res.setStuPanel(stuPanel);
+		return ResponseEntity.status(httpSts).body(res);
+		//return stuPanel;
+	}
+	catch (Exception e) {
+		throw new ApplicationException(e.getMessage(), null);
+	}
 	}
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//public Long getStudentTotalDue(String semail) {
-//Long due=0L;
-//List<Long> Dids = getTidDid(semail)[1];
-//for(Long did:Dids) {
-//	due = due+dueRepo.findOneByDid(did).getDueFee();
-//}
-//
-//return due;
-//
-//}
 

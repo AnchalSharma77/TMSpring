@@ -12,10 +12,16 @@ public class CurrDate {
 	public String getCurrDate() {
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");  
 	   LocalDateTime now = LocalDateTime.now(); 
-	   String date=" "+dtf.format(now);
+	   String date=""+dtf.format(now);
 	   return date;
 	}
 	
+	public String getRevCurrDate() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");  
+		   LocalDateTime now = LocalDateTime.now(); 
+		   String date=""+dtf.format(now);
+		   return date;
+		}
 	
 	/**
 	 * 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import com.example.TM.Model.FeeModel;
 import com.example.TM.Model.RegisterStudentModel;
 
 public interface RegisterStudentRepo extends CrudRepository<RegisterStudentModel,Long> {
@@ -29,5 +30,9 @@ public interface RegisterStudentRepo extends CrudRepository<RegisterStudentModel
 	List<RegisterStudentModel> findByEmail(String semail);
 
 	RegisterStudentModel findOneByMobileAndTid(Long mobile, Long tid);
+
+	FeeModel findOneByEmailAndTid(String sid, String tid);
+
+	RegisterStudentModel findOneByEmailAndTid(String sid, Long tid);
 
 }

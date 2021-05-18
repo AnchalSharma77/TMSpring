@@ -14,5 +14,6 @@ public interface RegisterTutorRepo extends CrudRepository<RegisterTutorModel ,Lo
 	boolean existsByEmail(String usrid);
 	boolean existsByMobile(String usrid);
 	RegisterTutorModel findOneByTid(Long tid);
+	boolean existsByTid(Long tid);
 
 }

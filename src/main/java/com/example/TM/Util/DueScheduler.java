@@ -8,11 +8,19 @@ import org.springframework.stereotype.Component;
 import com.example.TM.Model.DueModel;
 import com.example.TM.Service.CentralService;
 
-
+/***
+ * 
+ * This scheduler updates the due month
+ * and due fee of every registered student,
+ * on first of every month (at 12:00 AM).
+ * 
+ * @author Anchal
+ * @see https://github.com/AnchalSharma77
+ */
 @Component
 public class DueScheduler extends CentralService{
 	
-	//String day = new CurrDate().getDay(new CurrDate().getCurrDate());
+	
 	/***
 	 * Updates the due months and due fee
 	 */

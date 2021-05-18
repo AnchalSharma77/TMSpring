@@ -18,8 +18,8 @@ public class StudentLoginModel {
 	@Id
 	private String id;
 	//private Long mobile;
-	
 	private String otp;
+	private Long time;
 
 }
 

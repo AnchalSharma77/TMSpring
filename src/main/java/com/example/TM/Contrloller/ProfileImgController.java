@@ -23,10 +23,9 @@ public class ProfileImgController extends CentralService {
 	public ResponseEntity<PicUploadRes> uploadProfileImages(@RequestParam(value = "profileImg", required = false) MultipartFile profileImg,
             @RequestParam("id") String id) throws Exception  {
 		 try {
-	            return profileImgService.saveUserImage(id, profileImg);
+	            return profileImgService.saveTutorImage(id, profileImg);
 
 	        } catch (Exception e) {
-	          //  LOGGER.error(e.getMessage());
 	            throw new Exception(e.getMessage());
 	        }			
 	}
@@ -34,45 +33,40 @@ public class ProfileImgController extends CentralService {
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/getProfileImg", method = RequestMethod.GET)
-	public ResponseEntity<PicUploadRes> getProfileImage( @RequestParam("id") String id) throws Exception  {
-		
+	public ResponseEntity<PicUploadRes> getProfileImage( @RequestParam("id") String id) throws Exception  {		
 		 try {
-			 	
-	            return profileImgService.getTutorImage(id);
+			 return profileImgService.getTutorImage(id);
 
 	        } catch (Exception e) {
-	          //  LOGGER.error(e.getMessage());
 	            throw new Exception(e.getMessage());
 	        }
-				
-			
 	}
 
 
 	
-//	public ResponseEntity<BaseResponse> updateProfileImg(@RequestBody ProfileImgDto pi ) {
-//		
-//		BaseResponse res= new BaseResponse();
-//		try {
-//		if(profileImgService.updateProfileImg(pi)) {
-//			res.setResCode(new ResopnseCodes().ok);
-//			res.setResMsg(new ResopnseCodes().okMsg);
-//			return ResponseEntity.status(HttpStatus.OK).body(res);
-//		}
-//		else {
-//			res.setResCode(new ResopnseCodes().notFound);
-//			res.setResMsg(new ResopnseCodes().notFoundMsg);
-//			return ResponseEntity.status(HttpStatus.OK).body(res);
-//		}
-//		}
-//		catch(Exception e) {
-//		res.setResCode(new ResopnseCodes().invalid);
-//		res.setResMsg(new ResopnseCodes().invalidMsg);
-//		return ResponseEntity.status(HttpStatus.OK).body(res);
-//		}
-//		
-//			
-//	}
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value = "/updateStuProfileImg", method = RequestMethod.POST)
+	public ResponseEntity<PicUploadRes> uploadStuProfileImages(@RequestParam(value = "profileImg", required = false) MultipartFile profileImg,
+            @RequestParam("id") String id) throws Exception  {
+		 try {
+			 System.out.println("Api");
+	            return profileImgService.saveStudentImage(id, profileImg);
+
+	        } catch (Exception e) {
+	            throw new Exception(e.getMessage());
+	        }			
+	}
 	
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(value = "/getStuProfileImg", method = RequestMethod.GET)
+	public ResponseEntity<PicUploadRes> getStuProfileImage( @RequestParam("id") String id) throws Exception  {		
+		 try {
+			 return profileImgService.getStuImage(id);
+
+	        } catch (Exception e) {
+	            throw new Exception(e.getMessage());
+	        }
+	}
 
 }

@@ -11,6 +11,7 @@ import com.example.TM.Repo.FeeRepo;
 import com.example.TM.Repo.NotesRepo;
 import com.example.TM.Repo.RegisterStudentRepo;
 import com.example.TM.Repo.RegisterTutorRepo;
+import com.example.TM.Repo.ScheduleClassRepo;
 import com.example.TM.Repo.StudentLoginRepo;
 /**
  * 
@@ -20,6 +21,7 @@ import com.example.TM.Repo.StudentLoginRepo;
  * <p> These can be used anywhere in this project by 
  * simply extending the CentralService</p>
  * @author Anchal
+ * @see https://github.com/AnchalSharma77
  */
 @Service
 public class CentralService {
@@ -40,6 +42,8 @@ public class CentralService {
 	public DTSRepo dtsRepo;
 	@Autowired
 	public NotesRepo notesRepo;
+	@Autowired
+	public ScheduleClassRepo scheduleClassRepo;
 	
 	
 	//Services
@@ -54,7 +58,7 @@ public class CentralService {
 	@Autowired
 	public RegisterTutorService registerTutorService;
 	@Autowired
-    private	StudentLoginService studentLoginService;
+    public	StudentLoginService studentLoginService;
 	@Autowired
 	public PaymentService paymentService;
 	@Autowired
@@ -67,7 +71,12 @@ public class CentralService {
 	public ProfileImgService profileImgService;
 	@Autowired
 	public NotesService notesService;
-	
+	@Autowired
+	public ScheduleClassService scheduleClassService;
+	@Autowired
+	public ClassByStudentService classByStudentService;
+	@Autowired
+	public ResetPasswordService resetPasswordService;
 	
 	@Autowired
 	Environment env;

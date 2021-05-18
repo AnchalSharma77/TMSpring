@@ -1,37 +1,42 @@
 package com.example.TM.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.TM.Repo.RegisterTutorRepo;
-import com.example.TM.Util.Encrypt;
 
 @Service
 public class LoginService extends CentralService {
-	@Autowired
-	RegisterTutorRepo registrationRepo;
-	@Autowired
-	RegisterTutorService registerService;
 	
-	boolean checkPassword(String usrpass , String getPass) {
+	
+	    /***
+	     * <p>
+	     * Authenticate tutor.
+	     * </p>
+	     * <p>
+	     * {@literal usrpass} is the password provided by the user while logging in<br> 
+	     * {@literal getPass} is the actual password set by user while creating account , fetched from database.<br>
+	     * Both are encrypted 
+	     * </p>
+	     * @param usrpass must not be {@literal null}.
+	     * @param getPass must not be {@literal null}.
+	     * @return <code>true</code> if credentials are valid , else <code>false</code> 
+	     */
+		boolean checkPassword(String usrpass , String getPass) {
 		//System.out.println("usr pass" +Encrypt.encode(usrpass)); if(getPass.equals(Encrypt.encode(usrpass)))
 		if(getPass.equals(usrpass)){
-			//System.out.println("login success");
 			   return true;}
 		return false;
 	}
 	public boolean authenticate(String id , String pass) {
 		String password=null;
 		
-		boolean userExist=registerService.tutorExist(id);
+		boolean userExist=registerTutorService.tutorExist(id);
 		if(userExist) {
-			if(registerService.isEmail(id)) {
-				password=registrationRepo.findOneByEmail(id).getPass();
+			if(registerTutorService.isEmail(id)) {
+				password=registerTutorRepo.findOneByEmail(id).getPass();
 				return checkPassword(pass, password);
 			}
 			else {
 				System.out.println("mobile");
-				password=registrationRepo.findOneByMobile(id).getPass();
+				password=registerTutorRepo.findOneByMobile(id).getPass();
 				return checkPassword(pass, password);
 			}
 			
@@ -39,18 +44,5 @@ public class LoginService extends CentralService {
 			}
 			return false;
 		}
-			
-		
-		
-	
-//	public void login(String id, String pass) {
-//		if(authenticate(id, pass)) {
-//			System.out.println("user exist");
-//			//TODO login
-//		}
-//		else
-//			System.out.println("invalid");
-//	}
-	
 
 }

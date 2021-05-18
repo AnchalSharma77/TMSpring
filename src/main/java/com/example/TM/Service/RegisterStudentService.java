@@ -18,10 +18,12 @@ import com.example.TM.Util.Encrypt;
 public class RegisterStudentService extends CentralService{
 		
 	/***
-	 * 
-	 * @param std
-	 * @param Tid
-	 * @return Fee of a particular standard for that particular tutor.
+	 * <p>
+	 * Get the fee for the specified standard , <code>std</code> , for the particular <code>Tid</code>.
+	 * </p>
+	 * @param std must not be {@literal null}.
+	 * @param Tid must not be {@literal null}.
+	 * @return int
 	 */
 	public int getFee(int std ,Long Tid) {
 		List<FeeModel> feeList= feeRepo.findByStd(std);
@@ -33,6 +35,15 @@ public class RegisterStudentService extends CentralService{
 		return 0;
 	}
 	
+	/***
+	 * <p>
+	 * Register the student with the details provided in <code>streq</code>
+	 * with the tutor registered with <code>email</code> .
+	 * </p>
+	 * @param streq  must not be {@literal null}
+	 * @param email  must not be {@literal null}
+	 * @throws Exception
+	 */
 	public void addStudent( AddStuReq streq ,  String email) throws Exception  {
 		int std = 0 ,  stuFee =0;
 		RegisterStudentModel stu = new RegisterStudentModel();

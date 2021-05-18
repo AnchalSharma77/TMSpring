@@ -30,8 +30,9 @@ public class PaymentController extends CentralService{
 			res.setResMsg(new ResopnseCodes().okMsg);
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		}catch(Exception e) {
-			res.setResCode(new ResopnseCodes().notFound);
-			res.setResMsg(new ResopnseCodes().notFoundMsg);
+			System.out.println(e);
+			res.setResCode(new ResopnseCodes().invalid);
+			res.setResMsg(new ResopnseCodes().invalidMsg);
 			return ResponseEntity.status(HttpStatus.OK).body(res);
 		}
 	}

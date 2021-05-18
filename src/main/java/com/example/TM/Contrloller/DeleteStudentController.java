@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.TM.Model.DueModel;
 import com.example.TM.ResDto.BaseResponse;
 import com.example.TM.Service.CentralService;
+import com.example.TM.Util.Encrypt;
 import com.example.TM.Util.ResopnseCodes;
 
 @RestController
@@ -19,12 +20,14 @@ public class DeleteStudentController extends CentralService {
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping("/deleteStudent")
-	public ResponseEntity<BaseResponse> deleteStudennt(@RequestParam String id) {
+	public ResponseEntity<BaseResponse> deleteStudennt(@RequestParam String id ,@RequestParam String tid) {
 		DueModel dueData = new DueModel();
 		BaseResponse res= new BaseResponse();
 		boolean isEmail=registerTutorService.isEmail(id);
+		Long tutorid=registerTutorRepo.findOneByEmail(new Encrypt().decode(tid)).getTid();
 		try {
-		dueData =isEmail? dueRepo.findOneByEmail(id):dueRepo.findOneByMobile(id);
+			dueData =dueRepo.findOneByEmailAndTid(id,tutorid);
+		//dueData =isEmail? dueRepo.findOneByEmailAndTid(id,tutorid):dueRepo.findOneByMobile(id);
 		Long dm = dueData.getDm();
 		if(dm>0) {
 			res.setResCode(new ResopnseCodes().invalid);
@@ -33,7 +36,7 @@ public class DeleteStudentController extends CentralService {
 		}
 		else if(dm==0){
 			if(isEmail) {
-				studentRepo.delete(studentRepo.findOneByEmail(id));
+				studentRepo.delete(studentRepo.findOneByEmailAndTid(id,tutorid));
 				dueRepo.delete(dueRepo.findOneByEmail(id));
 			}
 			else {

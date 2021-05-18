@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.TM.Model.RegisterTutorModel;
 import com.example.TM.ReqDto.RegisterTutorDto;
-import com.example.TM.ResDto.BaseResponse;
-import com.example.TM.ResDto.PicUploadRes;
 import com.example.TM.ResDto.TutorRes;
 import com.example.TM.Util.Encrypt;
 import com.example.TM.Util.ResopnseCodes;
@@ -23,8 +21,8 @@ public class RegisterTutorService extends CentralService {
 		
 	/***
 	 * 
-	 * @param usrid
-	 * @return{@literal true} if email is entered as usrid
+	 * @param usrid must not be {@code null}
+	 * @return {@literal true } if email is entered as usrid
 	 */
 	public boolean isEmail(String usrid) {
 		System.out.println("in is email");
@@ -42,9 +40,9 @@ public class RegisterTutorService extends CentralService {
 	
 	/***
 	 * 
-	 * @param usrid
-	 * @return{@literal true} if tutor with the particular id(usrid) exists
-	 * else @return{@literal false}
+	 * @param usrid must not be {@literal null}.
+	 * @return {@literal true} if tutor with the particular id(usrid) exists
+	 * else {@literal false}
 	 * 
 	 */
 	public boolean tutorExist(String usrid){
@@ -57,10 +55,12 @@ public class RegisterTutorService extends CentralService {
 	
 	
 	/***
-	 * 
-	 * @param usrid
+	 * <p>
+	 * Find for the tutor registered with <code>usrid</code>
+	 * </p>
+	 * @param usrid must not be {@literal null}.
 	 * @return RegisterModel if record exist
-	 * else @return{@literal null}
+	 * else {@literal null}
 	 */
 	public RegisterTutorModel getTutor(String usrid) {
 		if(tutorExist(usrid)) {
@@ -75,11 +75,12 @@ public class RegisterTutorService extends CentralService {
 	}
 	
 	/***
-	 * 
-	 * @param reg
-	 * adds tutor record to the register table
+	 * <p>
+	 *  adds tutor record to the register tutor table
+	 * </p>
+	 * @param reg must not be {@code null}
+	 *
 	 */
-	
 	public void addTutor(@RequestBody RegisterTutorDto reg) {
 		RegisterTutorModel tutor = new RegisterTutorModel();
 		tutor.setFn(reg.getFn());
@@ -93,6 +94,13 @@ public class RegisterTutorService extends CentralService {
 	
 	
 	
+	/***
+	 * <p>
+	 * List all the registered tutors
+	 * </p>
+	 * @return ResponseEntity
+	 * @throws ApplicationException
+	 */
 	public ResponseEntity<TutorRes> getAllTutors() throws ApplicationException{
 		TutorRes res = new TutorRes();
 		HttpStatus httpSts = HttpStatus.OK;
@@ -108,7 +116,6 @@ public class RegisterTutorService extends CentralService {
 		}
 		return ResponseEntity.status(httpSts).body(res);
 		}catch (Exception e) {
-			//LOGGER.info(e.getMessage());
 			throw new ApplicationException(e.getMessage(), null);
 		}
 

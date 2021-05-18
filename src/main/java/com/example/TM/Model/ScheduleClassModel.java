@@ -9,22 +9,19 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-@Table(name="RegisteredStudentInfo")
+@Table(name="ScheduleClass")
 @Entity
-public class RegisterStudentModel {
+public class ScheduleClassModel {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long Sid;
-	private Long tid; //id of tutor
-	private Long mobile;
-	private String email;
-	private String name;
+	private Long cid;
+	private Long tid;
 	private String std;
-	private String doj;//date of joining
-	private int fee;// from static db 
-	private String imgUrl;
-	
+	private String name;
+	private String date;
+	private String msg;
+	private String link;
 }

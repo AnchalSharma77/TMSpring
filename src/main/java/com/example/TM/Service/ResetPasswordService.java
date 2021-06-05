@@ -37,12 +37,15 @@ public class ResetPasswordService extends CentralService {
 	
 	
 	public ResponseEntity<BaseResponse>  resetPass ( ResetPassDto resetpass){
+		
 		BaseResponse res= new BaseResponse();
 		String email=resetpass.getEmail();
 		String pass= resetpass.getPass();
 		RegisterTutorModel tutor = new RegisterTutorModel();
 		try {
+		
 		tutor = registerTutorRepo.findOneByEmail(email);
+		
 		tutor.setPass(pass);
 		registerTutorRepo.save(tutor);
 		res.setResCode(new ResopnseCodes().ok);

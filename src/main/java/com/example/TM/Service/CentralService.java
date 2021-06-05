@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import com.example.TM.Contrloller.EditDescController;
 import com.example.TM.Repo.AttendanceRepo;
 import com.example.TM.Repo.DTSRepo;
 import com.example.TM.Repo.DueRepo;
@@ -44,6 +45,8 @@ public class CentralService {
 	public NotesRepo notesRepo;
 	@Autowired
 	public ScheduleClassRepo scheduleClassRepo;
+	@Autowired
+	public EditDescController editDescController;
 	
 	
 	//Services
@@ -77,6 +80,10 @@ public class CentralService {
 	public ClassByStudentService classByStudentService;
 	@Autowired
 	public ResetPasswordService resetPasswordService;
+	@Autowired
+	public EditDescService editDescService ; 
+	@Autowired
+	public DeleteStudentService deleteStudentService;
 	
 	@Autowired
 	Environment env;

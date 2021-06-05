@@ -39,7 +39,6 @@ public class FeeController extends CentralService {
 	public ResponseEntity<BaseResponse> addFee(@RequestBody FeeDto fee,@RequestParam String id) {
 		BaseResponse res= new BaseResponse();
 		try {
-		//feeRepo.save(fee);
 		feeService.addFee(fee, id);
 		res.setResCode(new ResopnseCodes().ok);
 		res.setResMsg(new ResopnseCodes().okMsg);

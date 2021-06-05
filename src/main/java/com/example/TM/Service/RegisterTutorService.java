@@ -7,10 +7,12 @@ import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.TM.Model.RegisterTutorModel;
 import com.example.TM.ReqDto.RegisterTutorDto;
+import com.example.TM.ResDto.BaseResponse;
 import com.example.TM.ResDto.TutorRes;
 import com.example.TM.Util.Encrypt;
 import com.example.TM.Util.ResopnseCodes;
@@ -79,19 +81,32 @@ public class RegisterTutorService extends CentralService {
 	 *  adds tutor record to the register tutor table
 	 * </p>
 	 * @param reg must not be {@code null}
+	 * @throws Exception 
 	 *
 	 */
-	public void addTutor(@RequestBody RegisterTutorDto reg) {
-		RegisterTutorModel tutor = new RegisterTutorModel();
-		tutor.setFn(reg.getFn());
-		tutor.setLn(reg.getLn());
-		tutor.setMobile(reg.getMobile());
-		tutor.setEmail(reg.getEmail());
-		tutor.setPass(Encrypt.encode(reg.getPass()));
-		tutor.setDescription(reg.getDescription());
-		registerTutorRepo.save(tutor);
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping("/registertutor")
+	public ResponseEntity<BaseResponse> addTutor(RegisterTutorDto reg) throws Exception {
+		BaseResponse res= new BaseResponse();
+		try {
+			RegisterTutorModel tutor = new RegisterTutorModel();
+			tutor.setFn(reg.getFn());
+			tutor.setLn(reg.getLn());
+			tutor.setMobile(reg.getMobile());
+			tutor.setEmail(reg.getEmail());
+			tutor.setPass(Encrypt.encode(reg.getPass()));
+			tutor.setDescription(reg.getDescription());
+			registerTutorRepo.save(tutor);
+		res.setResCode(new ResopnseCodes().ok);
+		res.setResMsg(new ResopnseCodes().okMsg);
+		return ResponseEntity.status(HttpStatus.OK).body(res);
+			
+		}
+		catch(Exception e) {
+		throw new Exception(e.getMessage());
+		}
+		
 	}
-	
 	
 	
 	/***

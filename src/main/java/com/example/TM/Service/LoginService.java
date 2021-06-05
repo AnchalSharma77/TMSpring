@@ -1,6 +1,12 @@
 package com.example.TM.Service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.example.TM.ReqDto.LoginReqDto;
+import com.example.TM.ResDto.BaseResponse;
+import com.example.TM.Util.ResopnseCodes;
 
 @Service
 public class LoginService extends CentralService {
@@ -45,4 +51,34 @@ public class LoginService extends CentralService {
 			return false;
 		}
 
+	/***
+	 * 
+	 * @param tutor
+	 * @return
+	 * @throws Exception
+	 */
+	public ResponseEntity<BaseResponse> login(LoginReqDto tutor) throws Exception {
+		String id= tutor.getId();
+		String pass= tutor.getPass();
+		BaseResponse res= new BaseResponse();
+		try {
+		if(authenticate(id, pass)) {
+			//String desc = registerTutorRepo.findOneByEmail(id).getDescription();
+			res.setResCode(new ResopnseCodes().ok);
+			res.setResMsg(new ResopnseCodes().okMsg);
+			//res.setDesc(desc);
+			return ResponseEntity.status(HttpStatus.OK).body(res);
+		}
+		else {
+			res.setResCode(new ResopnseCodes().notFound);
+			res.setResMsg(new ResopnseCodes().notFoundMsg);
+			return ResponseEntity.status(HttpStatus.OK).body(res);
+		}
+		}
+		catch(Exception e) {
+		throw new Exception();
+		}
+		
+			
+	}
 }

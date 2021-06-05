@@ -90,10 +90,8 @@ public class RegisterStudentController extends CentralService {
 	
 		try {
 			
-			registerStudentService.addStudent(streq ,id);
-			res.setResCode(new ResopnseCodes().ok);
-			res.setResMsg(new ResopnseCodes().okMsg);
-			return ResponseEntity.status(HttpStatus.OK).body(res);
+			return registerStudentService.addStudent(streq ,id);
+			
 			
 		}catch(Exception e) {
 			res.setResCode(new ResopnseCodes().invalid);

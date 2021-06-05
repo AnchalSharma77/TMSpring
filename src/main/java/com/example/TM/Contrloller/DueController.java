@@ -27,11 +27,6 @@ public class DueController extends CentralService{
 	}
 	
 	
-//	@CrossOrigin(origins = "http://localhost:4200")
-//	@GetMapping("/dueById")
-//	public Long getDueById(String id) {
-//		return dueService.getDueById(id);
-//	}
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/dueById", method = RequestMethod.GET)
 	public ResponseEntity<DueRes> getDueById( @RequestParam String sid,@RequestParam String eid) throws Exception  {
@@ -47,20 +42,6 @@ public class DueController extends CentralService{
 	}
 
 	
-//	@CrossOrigin(origins = "http://localhost:4200")
-//	@RequestMapping(value = "/getDueFee", method = RequestMethod.GET)
-//	public ResponseEntity<DueRes> getDueFee( @RequestParam String sid,@RequestParam String eid) throws Exception  {
-//		System.out.println("------------------------ Api hit ");
-//		 try {
-//			 	
-//			 return dueService.getDueById(sid,eid);
-//
-//	        } catch (Exception e) {
-//	            throw new Exception(e.getMessage());
-//	        }
-//				
-//			
-//	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/listDueStudents", method = RequestMethod.GET)

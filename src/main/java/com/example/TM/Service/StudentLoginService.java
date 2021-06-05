@@ -3,7 +3,6 @@ package com.example.TM.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.TM.Model.StudentLoginModel;
 import com.example.TM.ReqDto.LoginStudentDto;
@@ -54,7 +53,7 @@ public class StudentLoginService extends CentralService {
 	 * @param stu must not be {@literal null}.
 	 * @return BaseResponse
 	 */
-	public ResponseEntity<BaseResponse> loginStudent(@RequestBody LoginStudentDto stu) {
+	public ResponseEntity<BaseResponse> loginStudent(LoginStudentDto stu) {
 		BaseResponse res= new BaseResponse();
 		try {
 		String id =stu.getId();
@@ -80,16 +79,16 @@ public class StudentLoginService extends CentralService {
 	}
 	
 	
-	public String body(String otp) {
-		String body ="<h3> Hello , </h3> <br>"
-				+ "<h3> Pleas use the verification code below on the TM website. </h3><br>"
-				+ "<h1> " +otp+"</h1><br>"
-				+ "<h3> If you didn't request this, you can ignore this email or let us know. </h3><br>"
-				+ "<h3> Thanks!</h3>"
-				;
-		
-		
-		return body;
-	}
-	
+//	public String body(String otp) {
+//		String body ="<h3> Hello , </h3> <br>"
+//				+ "<h3> Pleas use the verification code below on the TM website. </h3><br>"
+//				+ "<h1> " +otp+"</h1><br>"
+//				+ "<h3> If you didn't request this, you can ignore this email or let us know. </h3><br>"
+//				+ "<h3> Thanks!</h3>"
+//				;
+//		
+//		
+//		return body;
+//	}
+//	
 }

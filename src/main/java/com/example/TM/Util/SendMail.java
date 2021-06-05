@@ -15,8 +15,8 @@ public class SendMail {
 
 	   public void sendFromGMail(  String to , String body) throws MessagingException {
 	        Properties props = System.getProperties();
-	        String from = "project7719@gmail.com";
-	        String pass= "emailpassword";
+	        String from = "";
+	        String pass= "";
 	        String host = "smtp.gmail.com";
 	        props.put("mail.smtp.starttls.enable", "true");
 	        props.put("mail.smtp.host", host);
